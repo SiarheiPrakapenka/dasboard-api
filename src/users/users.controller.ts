@@ -1,14 +1,18 @@
+import 'reflect-metadata';
 import { NextFunction, Request, Response } from "express";
+import { inject, injectable } from "inversify";
 import { BaseController } from "../common/base.controller";
 import { IControllerRoute } from "../common/route.interface";
-import { LoggerService } from "../logger/logger.service";
 import { HTTPError } from "../errors/http.error.class";
+import { ILogger } from "../logger/logger.interface";
+import { TYPES } from "../types";
 
+@injectable()
 export class UserController extends BaseController {
   constructor(
-    logger: LoggerService
+    @inject(TYPES.ILogger) private loggerService: ILogger
   ) {
-    super(logger);
+    super(loggerService);
     this.bindRoutes([
       {
         path: '/register',
@@ -24,12 +28,10 @@ export class UserController extends BaseController {
   }
 
   login(req: Request, res: Response, next: NextFunction) {
-    next(new HTTPError(401, 'auth error', 'login'))
-    // this.ok(res, 'login');
+    next(new HTTPError(401, 'auth error', 'login'));
   }
 
   register(req: Request, res: Response, next: NextFunction) {
     this.ok(res, 'register');
-    
   }
 }
