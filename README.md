@@ -1,5 +1,9 @@
 # dasboard-api
 
+npm run dev - dev mode
+
+npm run build
+npm run start
 
 
 Inspect with Chrome Developer Tools:
